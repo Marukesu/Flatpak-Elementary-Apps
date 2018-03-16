@@ -1,0 +1,121 @@
+{
+	"app-id": "io.elementary.videos",
+	"runtime": "org.gnome.Platform",
+	"runtime-version": "3.26",
+	"sdk": "org.gnome.Sdk",
+	"command": "io.elementary.videos",
+	"desktop-file-name-prefix": "(Git) ",
+	"rename-icon": "multimedia-video-player",
+	"finish-args": [
+		"--filesystem=home:ro",
+
+		"--socket=x11",
+		"--socket=wayland",
+		"--socket=pulseaudio",
+		"--share=ipc",
+
+		"--filesystem=xdg-run/dconf",
+		"--filesystem=xdg-config/dconf:ro",
+		"--talk-name=ca.desrt.dconf",
+		"--env=DCONF_USER_CONFIG_DIR=.config/dconf"
+	],
+	"build-options": {
+		"env": {
+			"PKG_CONFIG_GOBJECT_INTROSPECTION_1_0_GIRDIR": "/app/share/gir-1.0",
+			"PKG_CONFIG_GOBJECT_INTROSPECTION_1_0_TYPELIBDIR": "/app/lib/girepository-1.0"
+		}
+	},
+	"cleanup": [
+		"/include",
+		"/lib/pkgconfig",
+		"/share/vala",
+		"/share/gir-1.0",
+		"/share/gtk-doc",
+		"/lib/girepository-1.0",
+		"/lib/*.la"
+	],
+	"modules": [
+		{
+			"name": "libgee",
+			"config-opts": [ "--disable-static" ],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://download.gnome.org/sources/libgee/0.20/libgee-0.20.0.tar.xz",
+					"sha256": "21308ba3ed77646dda2e724c0e8d5a2f8d101fb05e078975a532d7887223c2bb"
+				}
+			]
+		},
+		{
+			"name": "granite",
+			"buildsystem": "cmake-ninja",
+			"config-opts": [ "-DCMAKE_BUILD_TYPE=Release" ],
+			"cleanup": [ "/bin", "/share/applications" ],
+			"sources": [
+				{
+					"type":"archive",
+					"url": "https://github.com/elementary/granite/archive/0.5.tar.gz",
+					"sha256": "cc4905ae70fddeba3d2ded44bb642be77d419aa090251a7ab24c155b8616be06"
+				}
+			]
+		},
+		{
+			"name": "gst-plugins-ugly",
+			"config-opts": [ "--disable-gtk-doc" ],
+			"cleanup": [ "*.la", "/share/gtk-doc" ],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-1.12.3.tar.xz",
+					"sha256": "e88ca584c94ea78eeecbf3af00ef7f134b66bdee7408aa4aa6c547235e060052"
+				}
+			]
+		},
+		{
+			"name": "gst-libav",
+			"config-opts": [ "--disable-gtk-doc" ],
+			"cleanup": [ "*.la", "/share/gtk-doc" ],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://gstreamer.freedesktop.org/src/gst-libav/gst-libav-1.12.3.tar.xz",
+					"sha256": "015ef8cab6f7fb87c8fb42642486423eff3b6e6a6bccdcd6a189f436a3619650"
+				}
+			]
+		},
+		{
+			"name": "videos",
+			"buildsystem": "cmake",
+			"sources": [ 
+				{
+					"type": "git",
+					"url": "https://github.com/elementary/videos.git"
+				}
+			]
+		},
+		{
+			"name": "icons",
+			"buildsystem": "simple",
+			"build-commands": [
+				"install -dm755 /app/share/icons/hicolor/16x16/apps",
+				"install -dm755 /app/share/icons/hicolor/24x24/apps",
+				"install -dm755 /app/share/icons/hicolor/32x32/apps",
+				"install -dm755 /app/share/icons/hicolor/48x48/apps",
+				"install -dm755 /app/share/icons/hicolor/64x64/apps",
+				"install -dm755 /app/share/icons/hicolor/128x128/apps",
+				"cp apps/16/multimedia-video-player.svg /app/share/icons/hicolor/16x16/apps/",
+				"cp apps/24/multimedia-video-player.svg /app/share/icons/hicolor/24x24/apps/",
+				"cp apps/32/multimedia-video-player.svg /app/share/icons/hicolor/32x32/apps/",
+				"cp apps/48/multimedia-video-player.svg /app/share/icons/hicolor/48x48/apps/",
+				"cp apps/64/multimedia-video-player.svg /app/share/icons/hicolor/64x64/apps/",
+				"cp apps/128/multimedia-video-player.svg /app/share/icons/hicolor/128x128/apps/"
+			],
+			"sources": [
+				{
+					"type": "git",
+					"url": "https://github.com/elementary/icons.git"
+				}
+			]
+		}
+	]
+}
