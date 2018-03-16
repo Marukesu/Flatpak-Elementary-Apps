@@ -1,0 +1,124 @@
+{
+	"app-id": "io.elementary.code",
+	"runtime": "org.gnome.Platform",
+	"runtime-version": "3.26",
+	"sdk": "org.gnome.Sdk",
+	"desktop-file-name-prefix": "(Git) ",
+	"command": "io.elementary.code",
+	"finish-args": [
+		"--filesystem=host",
+		"--share=ipc",
+		"--socket=x11",
+		"--socket=wayland",
+
+		"--talk-name=org.gtk.vfs",
+		"--talk-name=org.gtk.vfs.*",
+		"--talk-name=org.gnome.SettingsDaemon",
+
+		"--filesystem=xdg-run/dconf",
+		"--filesystem=xdg-config/dconf:ro",
+		"--talk-name=ca.desrt.dconf",
+		"--env=DCONF_USER_CONFIG_DIR=.config/dconf"
+	],
+	"build-options": {
+		"env": {
+			"PKG_CONFIG_GOBJECT_INTROSPECTION_1_0_GIRDIR": "/app/share/gir-1.0",
+			"PKG_CONFIG_GOBJECT_INTROSPECTION_1_0_TYPELIBDIR": "/app/lib/girepository-1.0"
+		}
+	},
+	"cleanup": [
+		"/include",
+		"/lib/pkgconfig",
+		"/share/vala",
+		"/share/gir-1.0",
+		"/share/gtk-doc",
+		"/lib/girepository-1.0",
+		"/lib/*.la"
+	],
+	"modules": [
+		{
+			"name": "libgee",
+			"config-opts": [ "--disable-static" ],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://download.gnome.org/sources/libgee/0.20/libgee-0.20.0.tar.xz",
+					"sha256": "21308ba3ed77646dda2e724c0e8d5a2f8d101fb05e078975a532d7887223c2bb"
+				}
+			]
+		},
+		{
+			"name": "granite",
+			"buildsystem": "cmake-ninja",
+			"config-opts": [ "-DCMAKE_BUILD_TYPE=Release" ],
+			"cleanup": [ "/bin", "/share/applications" ],
+			"sources": [
+				{
+					"type":"archive",
+					"url": "https://github.com/elementary/granite/archive/0.5.tar.gz",
+					"sha256": "cc4905ae70fddeba3d2ded44bb642be77d419aa090251a7ab24c155b8616be06"
+				}
+			]
+		},
+		{
+			"name": "libpeas",
+			"config-opts": [
+				"--disable-static",
+				"--disable-gtk-doc",
+				"--disable-python2",
+				"--disable-python3"
+			],
+			"cleanup": [ "/bin", "/lib/peas-demo" ],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://download.gnome.org/sources/libpeas/1.22/libpeas-1.22.0.tar.xz",
+					"sha256": "5b2fc0f53962b25bca131a5ec0139e6fef8e254481b6e777975f7a1d2702a962"
+				}
+			]
+		},
+		{
+			"name": "gtksourceview",
+			"config-opts": [ "--disable-static" ],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://download.gnome.org/sources/gtksourceview/3.24/gtksourceview-3.24.6.tar.xz",
+					"sha256": "7aa6bdfebcdc73a763dddeaa42f190c40835e6f8495bb9eb8f78587e2577c188"
+				}
+			]
+		},
+		{
+			"name": "appstream",
+			"config-opts": [ "-Dstemming=false" ],
+			"buildsystem": "meson",
+			"sources": [
+				{
+					"type": "git",
+					"url": "https://github.com/ximion/appstream",
+					"commit": "51b2f7b9e7dc2164293257959dd34d46ee3bf3e0"
+				}
+			]
+		},
+		{
+			"name": "gtkspell",
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://sourceforge.net/projects/gtkspell/files/3.0.9/gtkspell3-3.0.9.tar.xz",
+					"sha256": "a4f4a4a2789f7499563e26d96b22d8085222ebe278da47d026b2de782b8b4d26"
+				}
+			]
+		},
+		{
+			"name": "code",
+			"buildsystem": "meson",
+			"sources": [
+				{
+					"type": "git",
+					"url": "https://github.com/elementary/code.git"
+				}
+			]
+		}
+	]
+}
