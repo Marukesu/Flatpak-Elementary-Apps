@@ -7,7 +7,9 @@ All apps begin with "(Git)" in their names because its form git master and for n
 
 | Application | Status |
 | --- | --- |
+| io.elementary.calculator | OK |
 | io.elementary.code | OK |
+| io.elementary.screenshot-tool | OK |
 
 **OBS:** more apps are coming when the manifests becomes buildable
 
