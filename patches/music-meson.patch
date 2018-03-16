@@ -1,0 +1,13 @@
+--- io.elementary.music/meson.build	2018-02-11 16:35:49.238018262 -0200
++++ io.elementary.music/meson.build	2018-02-11 16:36:24.593705400 -0200
+@@ -16,7 +16,8 @@
+   dependency('taglib_c'),
+   dependency('zeitgeist-2.0'),
+   meson.get_compiler('vala').find_library('posix'),
+-  meson.get_compiler('c').find_library('m')
++  meson.get_compiler('c').find_library('m'),
++  meson.get_compiler('c').find_library('z')
+ ]
+ 
+ app_files = files(
+

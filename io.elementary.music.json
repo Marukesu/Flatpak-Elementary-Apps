@@ -1,0 +1,257 @@
+{
+	"app-id": "io.elementary.music",
+	"runtime": "org.gnome.Platform",
+	"runtime-version": "3.26",
+	"sdk": "org.gnome.Sdk",
+	"command": "io.elementary.music",
+	"desktop-file-name-prefix": "(Git) ",
+	"rename-icon": "multimedia-audio-player",
+	"finish-args": [
+		"--filesystem=host",
+		"--share=ipc",
+		"--socket=x11",
+		"--socket=wayland",
+		"--socket=pulseaudio",
+
+		"--own-name=org.mpris.MediaPlayer2.Music",
+
+		"--talk-name=org.mpris.MediaPlayer2",
+		"--talk-name=org.gnome.zeitgeist",
+		"--talk-name=org.gnome.zeitgeist.Engine",
+		"--talk-name=org.gtk.vfs",
+		"--talk-name=org.gtk.vfs.*",
+		"--talk-name=org.gnome.SettingsDaemon.MediaKeys",
+		"--talk-name=org.freedesktop.secrets",
+
+		"--filesystem=xdg-run/dconf",
+		"--filesystem=xdg-config/dconf:ro",
+		"--talk-name=ca.desrt.dconf",
+		"--env=DCONF_USER_CONFIG_DIR=.config/dconf"
+	],
+	"build-options": {
+		"env": {
+			"PKG_CONFIG_GOBJECT_INTROSPECTION_1_0_GIRDIR": "/app/share/gir-1.0",
+			"PKG_CONFIG_GOBJECT_INTROSPECTION_1_0_TYPELIBDIR": "/app/lib/girepository-1.0"
+		}
+	},
+	"cleanup": [
+		"/include",
+		"/lib/pkgconfig",
+		"/share/vala",
+		"/share/gir-1.0",
+		"/share/gtk-doc",
+		"/lib/girepository-1.0",
+		"/lib/*.la"
+	],
+	"modules": [
+		{
+			"name": "libgee",
+			"config-opts": [ "--disable-static" ],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://download.gnome.org/sources/libgee/0.20/libgee-0.20.0.tar.xz",
+					"sha256": "21308ba3ed77646dda2e724c0e8d5a2f8d101fb05e078975a532d7887223c2bb"
+				}
+			]
+		},
+		{
+			"name": "granite",
+			"buildsystem": "cmake-ninja",
+			"config-opts": [ "-DCMAKE_BUILD_TYPE=Release" ],
+			"cleanup": [ "/bin", "/share/applications" ],
+			"sources": [
+				{
+					"type":"archive",
+					"url": "https://github.com/elementary/granite/archive/0.5.tar.gz",
+					"sha256": "cc4905ae70fddeba3d2ded44bb642be77d419aa090251a7ab24c155b8616be06"
+				}
+			]
+		},
+		{
+			"name": "libpeas",
+			"config-opts": [
+				"--disable-static",
+				"--disable-gtk-doc",
+				"--disable-python2",
+				"--disable-python3"
+			],
+			"cleanup": [ "/bin", "/lib/peas-demo" ],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://download.gnome.org/sources/libpeas/1.22/libpeas-1.22.0.tar.xz",
+					"sha256": "5b2fc0f53962b25bca131a5ec0139e6fef8e254481b6e777975f7a1d2702a962"
+				}
+			]
+		},
+		{
+			"name": "appstream",
+			"config-opts": [ "-Dstemming=false" ],
+			"buildsystem": "meson",
+			"sources": [
+				{
+					"type": "git",
+					"url": "https://github.com/ximion/appstream",
+					"commit": "51b2f7b9e7dc2164293257959dd34d46ee3bf3e0"
+				}
+			]
+		},
+		{
+			"name":"libgda",
+			"cleanup": ["/bin" ],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "http://ftp.gnome.org/pub/GNOME/sources/libgda/5.2/libgda-5.2.4.tar.xz",
+					"sha256": "2cee38dd583ccbaa5bdf6c01ca5f88cc08758b9b144938a51a478eb2684b765e"
+				}
+			]
+		},
+		{
+			"name": "taglib",
+			"cleanup": [ "/bin" ],
+			"config-opts": [ "-DBUILD_SHARED_LIBS=ON" ],
+			"buildsystem": "cmake-ninja",
+			"sources": [
+				{
+					"type": "archive",
+					"url": "http://taglib.org/releases/taglib-1.11.1.tar.gz",
+					"sha256": "b6d1a5a610aae6ff39d93de5efd0fdc787aa9e9dc1e7026fa4c961b26563526b"
+				}
+			]
+		},
+		{
+			"name": "telepathy-glib",
+			"config-opts": [ "--enable-vala-bindings" ],
+			"sources": [
+			{
+					"type": "git",
+					"url": "https://github.com/TelepathyIM/telepathy-glib.git",
+					"commit": "c834ef1a50a97cbfae7a0d560ff806fd5aa7ffe8"
+				}
+			]
+		},
+		{
+			"name": "libxml2",
+			"config-opts": [ "--without-python" ],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://git.gnome.org/browse/libxml2/snapshot/libxml2-2.9.4.tar.xz",
+					"sha256": "85b83a6ed144b75e7f63eca0d3c10f1cbab17ffd9a1edecf0b9554f9728cbece"
+				}
+			]
+		},
+		{
+			"name": "libraptor",
+			"sources": [
+				{
+					"type": "archive",
+					"url": "http://download.librdf.org/source/raptor2-2.0.15.tar.gz",
+					"sha256": "ada7f0ba54787b33485d090d3d2680533520cd4426d2f7fb4782dd4a6a1480ed"
+				}
+			]
+		},
+		{
+			"name": "pyparsing",
+			"buildsystem": "simple",
+			"build-commands": [
+				"python ./setup.py build",
+				"python ./setup.py install --prefix=/app"
+			],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://sourceforge.net/projects/pyparsing/files/pyparsing/pyparsing-2.2.0/pyparsing-2.2.0.tar.gz",
+					"sha256": "0832bcf47acd283788593e7a0f542407bd9550a55a8a8435214a1960e04bcb04"
+				}
+			]
+		},
+		{
+			"name": "isodate",
+			"buildsystem": "simple",
+			"ensure-writable": [ "/lib/python*/site-packages/easy-install.pth" ],
+			"build-commands": [
+				"python ./setup.py build",
+				"python ./setup.py install --prefix=/app"
+			],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://pypi.python.org/packages/f4/5b/fe03d46ced80639b7be9285492dc8ce069b841c0cebe5baacdd9b090b164/isodate-0.5.4.tar.gz",
+					"sha256": "42105c41d037246dc1987e36d96f3752ffd5c0c24834dd12e4fdbe1e79544e31"
+				}
+			]
+		},
+		{
+			"name": "rdflib",
+			"buildsystem": "simple",
+			"ensure-writable": [ "/lib/python*/site-packages/easy-install.pth" ],
+			"build-commands": [
+				"python ./setup.py build",
+				"python ./setup.py install --prefix=/app"
+			],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://github.com/RDFLib/rdflib/archive/4.2.2.tar.gz",
+					"sha256": "a362926f77624a8abfb93042c28607f49445d003792d5271cd07f0610ab16033"
+				}
+			]
+		},
+		{
+			"name": "zeitgeist",
+			"sources": [
+				{
+					"type": "git",
+					"url": "git://anongit.freedesktop.org/zeitgeist/zeitgeist",
+					"commit": "b1709a8917749f5e98553acfa8ff489557938fd1"
+				}	
+			]	
+		},
+		{
+			"name": "gst-plugins-ugly",
+			"config-opts": [ "--disable-gtk-doc" ],
+			"cleanup": [ "*.la", "/share/gtk-doc" ],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-1.12.3.tar.xz",
+					"sha256": "e88ca584c94ea78eeecbf3af00ef7f134b66bdee7408aa4aa6c547235e060052"
+				}
+			]
+		},
+		{
+			"name": "gst-libav",
+			"config-opts": [ "--disable-gtk-doc" ],
+			"cleanup": [ "*.la", "/share/gtk-doc" ],
+			"sources": [
+				{
+					"type": "archive",
+					"url": "https://gstreamer.freedesktop.org/src/gst-libav/gst-libav-1.12.3.tar.xz",
+					"sha256": "015ef8cab6f7fb87c8fb42642486423eff3b6e6a6bccdcd6a189f436a3619650"
+				}
+			]
+		},
+		{
+			"name": "music",
+			"config-opts": [ "-Dbuild-plugins=false" ],
+			"buildsystem": "meson",
+			"sources": [
+				{
+					"type": "git",
+					"url": "https://github.com/elementary/music.git"
+				},
+				{
+					"type": "patch",
+					"path": "patches/music-meson.patch"
+				},
+				{
+					"type": "patch",
+					"path": "patches/music-MediaKeys.patch"
+				}
+			]
+		}
+	]
+}
