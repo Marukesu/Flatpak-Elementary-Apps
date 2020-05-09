@@ -8,8 +8,8 @@
 | --- | --- |
 
 | io.elementary.calculator | OK |
-| io.elementary.code |  |
-| io.elementary.music |  |
+| io.elementary.code | OK |
+| io.elementary.music | OK |
 | io.elementary.screenshot-tool | * |
 | io.elementary.videos |  |
 
