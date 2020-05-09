@@ -1,0 +1,27 @@
+app-id: io.elementary.screenshot-tool
+branch: stable
+runtime: io.elementary.Platform
+runtime-version: '0.1.0'
+sdk: io.elementary.Sdk
+command: io.elementary.screenshot-tool
+rename-icon: accessories-screenshot
+finish-args:
+  - '--filesystem=xdg-pictures'
+
+  - '--share=ipc'
+  - '--socket=fallback-x11'
+  - '--socket=wayland'
+cleanup:
+  - '/include'
+  - '/lib/pkgconfig'
+  - '/lib/debug'
+  - '/share/vala'
+  - '*a'
+  - '*.la'
+modules:
+  - name: screenshot-tool
+    buildsystem: meson
+    sources:
+      - type: git
+        url: https://github.com/elementary/screenshot.git
+        tag: '1.7.1'
