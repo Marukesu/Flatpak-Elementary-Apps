@@ -6,7 +6,6 @@
 
 | Application | status |
 | --- | --- |
-
 | io.elementary.calculator | OK |
 | io.elementary.code | OK |
 | io.elementary.music | OK |
