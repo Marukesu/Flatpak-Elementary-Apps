@@ -10,12 +10,10 @@
 | io.elementary.calculator | OK |
 | io.elementary.code | OK |
 | io.elementary.music | OK |
-| io.elementary.screenshot-tool | * |
-| io.elementary.videos |  |
+| io.elementary.screenshot | * |
+| io.elementary.videos | * |
 
 ## Build the manifest and install
-
-**OBS:** these manifest uses the latest release of the applications, use the [master branch](https://github.com/mrmarukesu/flatpak-elementary-applications/tree/master) for manifest using the application master branch.
 
 You'll need to compile the [elementary's flatpak platform](https://github.com/elementary/flatpak-platform) to use theses manifests.
 Flatpak-builder is needed for build the manifests, so, for example, you will install code running: 
@@ -30,5 +28,3 @@ flatpak remote-add --user --no-gpg-verify ~/.elementaryFlat elementaryApps
 flatpak install elementaryApps io.elementary.code
 ```
 so now you'll have a unique repo for all the apps.
-
-remember of rebuild the manifest when it's have a update in git. it's can be easily with the `--require-changes` option of flatpak-builder
