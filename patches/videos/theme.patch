@@ -5,13 +5,13 @@
                  }
 
 +                // set the elementary gtk theme if the system use a difrerent theme
-+                var gtk_settings = Gtk.settings.get_default ();
-+                if (gtk.settings.gtk_theme_name != "elementary") {
++                var gtk_settings = Gtk.Settings.get_default ();
++                if (gtk_settings.gtk_theme_name != "elementary") {
 +                    gtk_settings.gtk_theme_name = "elementary";
 +                }
 +
 +                // set the elementary icon theme if the system use a difrerent theme
-+                if (gtk.settings.gtk_icon_theme_name != "elementary") {
++                if (gtk_settings.gtk_icon_theme_name != "elementary") {
 +                    gtk_settings.gtk_icon_theme_name = "elementary";
 +                }
 +
