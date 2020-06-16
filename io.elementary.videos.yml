@@ -1,0 +1,57 @@
+app-id: io.elementary.videos
+branch: stable
+runtime: io.elementary.Platform
+runtime-version: '0.1.0'
+sdk: io.elementary.Sdk
+command: io.elementary.videos
+rename-icon: multimedia-video-player
+finish-args:
+  - '--filesystem=home:ro'
+
+  - '--device=dri'
+  - '--share=ipc'
+  - '--socket=fallback-x11'
+  - '--socket=wayland'
+  - '--socket=pulseaudio'
+
+  - '--talk-name=org.gnome.zeitgeist.Engine'
+  - '--talk-name=org.gnome.SettingsDaemon.MediaKeys'
+  - '--talk-name=org.gnome.SessionManager'
+  - '--talk-name=org.freedesktop.ScreenSaver'
+  - '--talk-name=org.freedesktop.thumbinails.Thumbnailer1'
+cleanup:
+  - '/include'
+  - '/lib/pkgconfig'
+  - '/lib/debug'
+  - '/share/vala'
+  - '*a'
+  - '*.la'
+modules:
+  - name: videos
+    buildsystem: meson
+    sources:
+      - type: git
+        url: https://github.com/elementary/videos.git
+        tag: '2.7.1'
+      - type: patch
+        path: patches/videos/theme.patch
+    modules: # videos don't ship with icons, so it's need do get it from icons repository
+      - name: icons
+        buildsystem: simple
+        build-commands:
+          - 'install -dm755 /app/share/icons/hicolor/16x16/apps'
+          - 'install -dm755 /app/share/icons/hicolor/24x24/apps'
+          - 'install -dm755 /app/share/icons/hicolor/32x32/apps'
+          - 'install -dm755 /app/share/icons/hicolor/48x48/apps'
+          - 'install -dm755 /app/share/icons/hicolor/64x64/apps'
+          - 'install -dm755 /app/share/icons/hicolor/128x128/apps'
+          - 'cp apps/16/multimedia-video-player.svg /app/share/icons/hicolor/16x16/apps/'
+          - 'cp apps/24/multimedia-video-player.svg /app/share/icons/hicolor/24x24/apps/'
+          - 'cp apps/32/multimedia-video-player.svg /app/share/icons/hicolor/32x32/apps/'
+          - 'cp apps/48/multimedia-video-player.svg /app/share/icons/hicolor/48x48/apps/'
+          - 'cp apps/64/multimedia-video-player.svg /app/share/icons/hicolor/64x64/apps/'
+          - 'cp apps/128/multimedia-video-player.svg /app/share/icons/hicolor/128x128/apps/'
+        sources:
+          - type: git
+            url: https://github.com/elementary/icons.git
+            tag: '5.3.1'

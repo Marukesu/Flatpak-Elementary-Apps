@@ -1,6 +1,6 @@
 app-id: io.elementary.code
 branch: stable
-runtime: io.elementary.Sdk #So outline plugin works
+runtime: io.elementary.Sdk # outline plugin needs libvala that is only on sdk
 runtime-version: '0.1.0'
 sdk: io.elementary.Sdk
 command: io.elementary.code
@@ -13,7 +13,7 @@ finish-args:
   - '--socket=wayland'
 
   - '--talk-name=org.gnome.SettingsDaemon'
-cleanup: 
+cleanup:
   - '/include'
   - '/lib/pkgconfig'
   - '/lib/debug'
@@ -33,7 +33,7 @@ modules:
         url: https://download.gnome.org/sources/gtksourceview/3.24/gtksourceview-3.24.7.tar.xz
         sha256: a5c20d3a6347533689358f3ea52486409f6dd41d5a69c65eab7570cfaffee8e6
       - type: patch
-        path: patches/code/draw-space.patch #Add draw-space tag to solarized themes
+        path: patches/code/draw-space.patch # Add draw-space tag to solarized themes
 
   - name: libpeas
     config-opts:
@@ -108,4 +108,6 @@ modules:
     sources:
       - type: git
         url: https://github.com/elementary/code.git
-        tag: '3.4.0'
+        tag: '3.4.1'
+      - type: patch
+        path: patches/code/theme.patch

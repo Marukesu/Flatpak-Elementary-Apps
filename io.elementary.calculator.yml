@@ -16,7 +16,9 @@ modules:
       - type: git
         url: https://github.com/elementary/calculator.git
         tag: '1.5.5'
-    modules: # calculator don't come with icons, so it's need do get it from icons repository
+      - type: patch
+        path: patches/calculator/theme.patch
+    modules: # calculator don't ship with icons, so, get it from icons repository
       - name: icons
         buildsystem: simple
         build-commands:

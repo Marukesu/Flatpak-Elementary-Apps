@@ -1,4 +1,4 @@
-app-id: io.elementary.screenshot-tool
+app-id: io.elementary.screenshot
 branch: stable
 runtime: io.elementary.Platform
 runtime-version: '0.1.0'
@@ -19,9 +19,11 @@ cleanup:
   - '*a'
   - '*.la'
 modules:
-  - name: screenshot-tool
+  - name: screenshot
     buildsystem: meson
     sources:
       - type: git
         url: https://github.com/elementary/screenshot.git
         tag: '1.7.1'
+      - type: patch
+        path: patches/screenshot/theme.patch

@@ -16,7 +16,7 @@ finish-args:
 
   - '--own-name=org.mpris.MediaPlayer2.Music' # MIRPS interface uses 'Music' but app RDNN is 'music'
   - '--talk-name=org.gnome.SettingsDaemon.MediaKeys'
-  - '--talk-name=org.gnome.zeitgeist'
+  - '--talk-name=org.freedesktop.Notifications'
   - '--talk-name=org.gnome.zeitgeist.Engine'
 cleanup:
   - '/include'
@@ -72,9 +72,11 @@ modules:
 
   - name: music
     config-opts:
-      - '-Dplugins=audioplayer' #test others plugins
+      - '-Dplugins=audioplayer' # check others plugins
     buildsystem: meson
     sources:
       - type: git
         url: https://github.com/elementary/music.git
         tag: '5.0.5'
+      - type: patch
+        path: patches/music/theme.patch

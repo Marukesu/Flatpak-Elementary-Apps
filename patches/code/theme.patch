@@ -1,0 +1,21 @@
+--- a/src/Application.vala
++++ b/src/Application.vala
+@@ -206,6 +206,17 @@
+             var window = get_last_window ();
+             if (window == null) {
+                 window = this.new_window ();
++                var gtk_settings = Gtk.Settings.get_default ();
++                // set the elementary gtk theme if the system use a diferent theme
++                if (gtk_settings.gtk_theme_name != "elementary") {
++                    gtk_settings.gtk_theme_name = "elementary";
++                }
++
++                // set the elementary icon theme if the system use a diferent theme
++                if (gtk_settings.gtk_icon_theme_name != "elementary") {
++                    gtk_settings.gtk_icon_theme_name = "elementary";
++                }
++
+                 window.show ();
+                 window.restore_opened_documents ();
+             } else {
+
