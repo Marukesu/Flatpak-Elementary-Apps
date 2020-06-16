@@ -4,6 +4,7 @@ runtime: io.elementary.Platform
 runtime-version: '0.1.0'
 sdk: io.elementary.Sdk
 command: io.elementary.screenshot-tool
+rename-desktop-file: io.elementary.screenshot-tool.desktop
 rename-icon: accessories-screenshot
 finish-args:
   - '--filesystem=xdg-pictures'
