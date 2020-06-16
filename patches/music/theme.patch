@@ -1,20 +1,20 @@
---- ../../../elementary/music/src/Application.vala	2020-06-15 21:51:54.242178182 -0300
-+++ ../../../elementary/music/src/2Application.vala	2020-06-15 22:27:03.708964708 -0300
+--- music/src/Application.vala	2020-06-15 21:51:54.242178182 -0300
++++ music/src/Application.vala	2020-06-15 22:27:03.708964708 -0300
 @@ -73,6 +73,17 @@
- 
+
      protected override void activate () {
          if (main_window == null) {
 +            // set the elementary gtk theme if the system use a diferent theme
-+            var gtk_settings = new Gtk.Settings.get_default ();
++            var gtk_settings = Gtk.Settings.get_default ();
 +            if (gtk_settings.gtk_theme_name != "elementary") {
 +                gtk_settings.gtk_theme_name = "elementary";
 +            }
 +
 +            // set the elementary icon theme if the system use a diferent theme
-+            if (gtk_settings.get_icon_theme_name != "elementary") {
-+                gtk_settings.get_icon_theme_name = "elementary";
++            if (gtk_settings.gtk_icon_theme_name != "elementary") {
++                gtk_settings.gtk_icon_theme_name = "elementary";
 +            }
 +
              libraries_manager = new LibrariesManager ();
- 
+
              library_manager = new LocalLibrary ();

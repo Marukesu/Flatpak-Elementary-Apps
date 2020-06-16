@@ -1,11 +1,11 @@
---- ../../../elementary/screenshot/src/Application.vala	2020-06-15 22:35:00.321450358 -0300
-+++ ../../../elementary/screenshot/src/2Application.vala	2020-06-15 22:40:27.752228161 -0300
+--- screenshot/src/Application.vala	2020-06-15 22:35:00.321450358 -0300
++++ screenshot/src/2Application.vala	2020-06-15 22:40:27.752228161 -0300
 @@ -77,6 +77,17 @@
                  return;
              }
- 
+
 +            // set the elementary theme if the system use a diferent theme
-+            var gtk_settings = new Gtk.Settings.get_default ();
++            var gtk_settings = Gtk.Settings.get_default ();
 +            if (gtk_settings.gtk_theme_name != "elementary") {
 +                gtk_settings.gtk_theme_name = "elementary";
 +            }
