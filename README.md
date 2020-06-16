@@ -9,21 +9,24 @@
 | io.elementary.calculator | OK |
 | io.elementary.code | OK |
 | io.elementary.music | OK |
-| io.elementary.screenshot | * |
-| io.elementary.videos | * |
+| io.elementary.screenshot | OK* |
+| io.elementary.videos | [#2](https://github.com/marukesu/flatpak-elementary-apps/issues/2) |
 
+\* conceal text won't work
 ## Build the manifest and install
-
 You'll need to compile the [elementary's flatpak platform](https://github.com/elementary/flatpak-platform) to use theses manifests.
-Flatpak-builder is needed for build the manifests, so, for example, you will install code running: 
 
-`flatpak-builder --user .build io.elementary.code.yml --force-clean --install`
+`flatpak-builder` is needed for build the manifests, so, for example, you will install code running: 
 
-or,your wanna make a local repo and install form it. run:
-
+```bash
+flatpak-builder --user .build io.elementary.code.yml --force-clean --install
 ```
+
+or, if you wanna make a local repo and install from it. run:
+
+```bash
 flatpak-builder --user .build io.elementary.code.yml --repo=/home/user/.elementaryFlat
 flatpak remote-add --user --no-gpg-verify ~/.elementaryFlat elementaryApps
 flatpak install elementaryApps io.elementary.code
 ```
-so now you'll have a unique repo for all the apps.
+so now you have a unique repo for all the apps.
